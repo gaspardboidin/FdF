@@ -6,7 +6,7 @@
 /*   By: gaboidin <gaboidin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 15:49:35 by gaboidin          #+#    #+#             */
-/*   Updated: 2025/02/13 17:05:57 by gaboidin         ###   ########.fr       */
+/*   Updated: 2025/02/13 17:48:58 by gaboidin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	initialize_bresenham(t_point p1, t_point p2, t_bresenham *b)
 {
-	b->dx = abs(p2.x - p1.x);
-	b->dy = abs(p2.y - p1.y);
+	b->dx = fabs(p2.x - p1.x);
+	b->dy = fabs(p2.y - p1.y);
 	get_direction(p1, p2, &b->sx, &b->sy);
 	b->err = b->dx - b->dy;
 }

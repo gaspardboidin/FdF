@@ -6,7 +6,7 @@
 /*   By: gaboidin <gaboidin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:51:37 by gaboidin          #+#    #+#             */
-/*   Updated: 2025/02/13 17:36:19 by gaboidin         ###   ########.fr       */
+/*   Updated: 2025/02/13 18:14:10 by gaboidin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	get_direction(t_point p1, t_point p2, int *sx, int *sy)
 t_point	get_point(int x, int y, int z, t_fdf *data)
 {
 	t_point	p;
+	t_point	r;
 	double	new_x;
 	double	new_y;
 	double	new_z;
@@ -37,7 +38,12 @@ t_point	get_point(int x, int y, int z, t_fdf *data)
 	apply_rotation_y(&new_x, &new_y, data->cam.ry);
 	apply_rotation_x(&new_y, &new_z, data->cam.rx);
 	apply_rotation_z(&new_x, &new_y, data->cam.rz);
-	apply_projection(&p, new_x, new_y, new_z, data);
+	r.x = new_x;
+	r.y = new_y;
+	r.z = new_z;
+	apply_projection(&p, &r, data);
+	p.x = (int)round(p.x);
+	p.y = (int)round(p.y);
 	p.z = new_z;
 	p.color = (data->color.r << 16) | (data->color.g << 8) | data->color.b;
 	return (p);

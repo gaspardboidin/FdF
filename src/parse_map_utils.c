@@ -6,7 +6,7 @@
 /*   By: gaboidin <gaboidin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 09:35:47 by gaboidin          #+#    #+#             */
-/*   Updated: 2025/02/13 15:12:32 by gaboidin         ###   ########.fr       */
+/*   Updated: 2025/02/14 13:22:22 by gaboidin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ int	count_dimensions(char *filename, t_fdf *data)
 		line = get_next_line(fd);
 	}
 	close(fd);
+	if (data->max_y == 0 || data->max_x == 0)
+		return (0);
 	return (1);
 }
 
@@ -65,33 +67,12 @@ int	allocate_map(t_fdf *data)
 	return (1);
 }
 
-// Remplit une ligne de 'map' a partir du fichier .fdf
-void	fill_map_row(char *line, t_fdf *data, int row)
-{
-	char	**split;
-	int		col;
-
-	split = ft_split(line, ' ');
-	if (!split)
-		return ;
-	data->map[row] = malloc(sizeof(int) * data->max_x);
-	if (!data->map[row])
-		return ;
-	col = 0;
-	while (col < data->max_x)
-	{
-		data->map[row][col] = ft_atoi(split[col]);
-		free(split[col]);
-		col++;
-	}
-	free(split);
-}
-
 int	fill_map(char *filename, t_fdf *data)
 {
 	int		fd;
 	char	*line;
 	int		row;
+	int		row_checker;
 
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
@@ -100,7 +81,13 @@ int	fill_map(char *filename, t_fdf *data)
 	line = get_next_line(fd);
 	while (line)
 	{
-		fill_map_row(line, data, row);
+		row_checker = fill_map_row(line, data, row);
+		if (!row_checker)
+		{
+			free(line);
+			close(fd);
+			return (0);
+		}
 		free(line);
 		row++;
 		line = get_next_line(fd);
