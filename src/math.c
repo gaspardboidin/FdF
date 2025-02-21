@@ -6,7 +6,7 @@
 /*   By: gaboidin <gaboidin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 15:49:35 by gaboidin          #+#    #+#             */
-/*   Updated: 2025/02/13 17:48:58 by gaboidin         ###   ########.fr       */
+/*   Updated: 2025/02/21 19:51:50 by gaboidin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	draw_line_loop(t_fdf *data, t_point p1, t_point p2, t_bresenham *b)
 	int	err2;
 	int	color;
 
-	color = (data->color.r << 16) | (data->color.g << 8) | data->color.b;
+	color = p1.color;
 	while (p1.x != p2.x || p1.y != p2.y)
 	{
 		put_pixel(data, p1.x, p1.y, color);

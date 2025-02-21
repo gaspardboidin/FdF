@@ -6,7 +6,7 @@
 #    By: gaboidin <gaboidin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/16 17:10:11 by gaboidin          #+#    #+#              #
-#    Updated: 2025/01/30 16:39:22 by gaboidin         ###   ########.fr        #
+#    Updated: 2025/02/20 15:09:14 by gaboidin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ NAME = libft.a
 # Fichiers sources
 SRCS =	src/ft_isalnum.c src/ft_isprint.c src/ft_memcmp.c src/ft_putchar_fd.c src/ft_split.c \
 		src/ft_strlcat.c src/ft_strncmp.c src/ft_substr.c src/ft_atoi.c src/ft_isalpha.c \
-		src/ft_itoa.c src/ft_memcpy.c src/ft_putendl_fd.c src/ft_strchr.c src/ft_strlcpy.c \
+		src/ft_itoa.c src/ft_atoi_base.c src/ft_memcpy.c src/ft_putendl_fd.c src/ft_strchr.c src/ft_strlcpy.c \
 		src/ft_strnstr.c src/ft_tolower.c src/ft_bzero.c src/ft_isascii.c \
 		src/ft_memmove.c src/ft_putnbr_fd.c src/ft_strdup.c src/ft_strlen.c src/ft_strrchr.c \
 		src/ft_toupper.c src/ft_calloc.c src/ft_isdigit.c src/ft_memchr.c src/ft_memset.c  \
@@ -29,7 +29,7 @@ OBJS = $(SRCS:.c=.o)
 
 # Compilateur
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -fPIC
 
 # Nettoyage
 RM = rm -f

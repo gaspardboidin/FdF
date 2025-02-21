@@ -6,7 +6,7 @@
 /*   By: gaboidin <gaboidin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 14:58:49 by gaboidin          #+#    #+#             */
-/*   Updated: 2025/02/14 13:19:36 by gaboidin         ###   ########.fr       */
+/*   Updated: 2025/02/21 21:42:53 by gaboidin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 # define FDF_H
 
 # include "../libft/libft.h"
-# include "mlx.h"
+# include "/home/gaboidin/42/minilibx/minilibx-linux/mlx.h"
+# include <X11/X.h>
 # include <fcntl.h>
 # include <math.h>
 # include <stdio.h>
@@ -65,6 +66,7 @@ typedef struct s_fdf
 	int		width;
 	int		height;
 	int		**map;
+	int		**colors;
 	int		max_x;
 	int		max_y;
 	int		min_z;
@@ -73,40 +75,36 @@ typedef struct s_fdf
 	int		offset_x;
 	int		offset_y;
 	int		projection;
-	int		dynamic_color;
 	t_color	color;
 	t_cam	cam;
 }			t_fdf;
 
-# define KEY_ESC 53
-# define KEY_W 13
-# define KEY_A 0
-# define KEY_S 1
-# define KEY_D 2
-# define KEY_PLUS 24
-# define KEY_MINUS 27
-# define KEY_SIZEUP 47
-# define KEY_SIZEDOWN 43
-# define KEY_UP 126
-# define KEY_DOWN 125
-# define KEY_LEFT 123 // Flèche gauche
-# define KEY_RIGHT 124 // Flèche droite
-# define KEY_Q 12 // Touche Q
-# define KEY_E 14 // Touche E
-# define KEY_R 15 // Lettre R pour Rouge
-# define KEY_G 5 // Lettre G pour Vert
-# define KEY_B 11 // Lettre B pour Bleu
-# define KEY_C 8 // Touche pour remettre la couleur en blanc
-# define KEY_P 35 // 🔄 Basculer entre isométrique et parallèle
-# define KEY_L 37 // Touche L pour activer/désactiver les couleurs dynamiques
+# define KEY_ESC 65307
+# define KEY_W 119
+# define KEY_A 97
+# define KEY_S 115
+# define KEY_D 100
+# define KEY_PLUS 61
+# define KEY_MINUS 45
+# define KEY_SIZEUP 46
+# define KEY_SIZEDOWN 44
+# define KEY_UP 65362
+# define KEY_DOWN 65364
+# define KEY_LEFT 65361
+# define KEY_RIGHT 65363
+# define KEY_Q 113
+# define KEY_E 101
+# define KEY_R 114
+# define KEY_G 103
+# define KEY_B 98
+# define KEY_C 99
+# define KEY_P 112
 
 // Declaration des fonctions
 t_fdf		*init_fdf(void);
 int			init_fdf_2(t_fdf *data);
 void		print_legend(t_fdf *data);
 int			exit_program(t_fdf *data);
-int			move_map(int key, t_fdf *data);
-int			zoom_map(int key, t_fdf *data);
 int			handle_key(int key, t_fdf *data);
 char		**ft_split(const char *s, char c);
 int			parse_map(char *filename, t_fdf *data);
@@ -118,10 +116,6 @@ int			parse_map(char *filename, t_fdf *data);
 int			count_dimensions(char *filename, t_fdf *data);
 void		draw_map(t_fdf *data);
 void		put_pixel(t_fdf *data, int x, int y, int color);
-int			hange_color(int key, t_fdf *data);
-int			update_color(int key, t_fdf *data);
-int			change_altitude(int key, t_fdf *data);
-int			rotate_map(int key, t_fdf *data);
 void		apply_rotations(t_point *r, t_fdf *data);
 void		apply_rotation_x(double *y, double *z, double rx);
 void		apply_rotation_y(double *x, double *y, double ry);
@@ -132,5 +126,9 @@ void		apply_projection(t_point *p, t_point *r, t_fdf *data);
 void		free_map_partial(int **map, int rows_allocated);
 void		free_split(char **split);
 void		free_map(int **map, int rows);
+void		free_color_map(int **colors, int rows);
+int			rgb_to_bgr(int color);
+void		cleanup_parsing(t_fdf *data, int rows_allocated);
+int			prepare_map_row(char *line, t_fdf *data, int row, char ***psplit);
 
 #endif

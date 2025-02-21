@@ -6,13 +6,13 @@
 /*   By: gaboidin <gaboidin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 13:21:41 by gaboidin          #+#    #+#             */
-/*   Updated: 2025/02/14 13:39:35 by gaboidin         ###   ########.fr       */
+/*   Updated: 2025/02/21 21:12:19 by gaboidin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-static void	cleanup_map(t_fdf *data, char **split, int row)
+void	cleanup_map(t_fdf *data, char **split, int row)
 {
 	free_split(split);
 	free_map_partial(data->map, row);
@@ -20,39 +20,41 @@ static void	cleanup_map(t_fdf *data, char **split, int row)
 	data->map = NULL;
 }
 
-static int	prepare_map_row(char *line, t_fdf *data, int row, char ***psplit)
+static void	parse_token(char *token, int *altitude, int *color_val, t_fdf *data)
 {
-	int	actual_cols;
+	char	*color_str;
 
-	*psplit = ft_split(line, ' ');
-	if (!*psplit)
-		return (0);
-	actual_cols = 0;
-	while ((*psplit)[actual_cols])
-		actual_cols++;
-	if (actual_cols < data->max_x)
+	color_str = ft_strchr(token, ',');
+	if (color_str != NULL)
 	{
-		cleanup_map(data, *psplit, row);
-		return (0);
+		*color_str = '\0';
+		color_str++;
+		*altitude = ft_atoi(token);
+		if (ft_strncmp(color_str, "0x", 2) == 0
+			|| ft_strncmp(color_str, "0X", 2) == 0)
+			color_str = color_str + 2;
+		*color_val = ft_atoi_base(color_str, "0123456789ABCDEF");
 	}
-	data->map[row] = malloc(sizeof(int) * data->max_x);
-	if (!data->map[row])
+	else
 	{
-		cleanup_map(data, *psplit, row);
-		return (0);
+		*altitude = ft_atoi(token);
+		*color_val = ((data->color.r << 16) | (data->color.g << 8)
+				| data->color.b);
 	}
-	return (1);
 }
 
-static int	fill_map_row_data(t_fdf *data, int row, char **split)
+int	fill_map_row_data(t_fdf *data, int row, char **split)
 {
-	int	col;
+	int		col;
+	char	*token;
 
 	col = 0;
 	while (col < data->max_x)
 	{
-		data->map[row][col] = ft_atoi(split[col]);
-		free(split[col]);
+		token = split[col];
+		parse_token(token, &data->map[row][col],
+			&data->colors[row][col], data);
+		free(token);
 		col++;
 	}
 	return (1);
@@ -68,4 +70,16 @@ int	fill_map_row(char *line, t_fdf *data, int row)
 	fill_map_row_data(data, row, split);
 	free(split);
 	return (1);
+}
+
+int	rgb_to_bgr(int color)
+{
+	int	r;
+	int	g;
+	int	b;
+
+	r = (color >> 16) & 0xFF;
+	g = (color >> 8) & 0xFF;
+	b = (color) & 0xFF;
+	return ((b << 16) | (g << 8) | r);
 }

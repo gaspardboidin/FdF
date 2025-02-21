@@ -6,7 +6,7 @@
 /*   By: gaboidin <gaboidin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 16:08:19 by gaboidin          #+#    #+#             */
-/*   Updated: 2025/02/13 10:50:20 by gaboidin         ###   ########.fr       */
+/*   Updated: 2025/02/20 15:12:00 by gaboidin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void			*ft_memcpy(void *dest, const void *src, size_t n);
 int				ft_memcmp(const void *s1, const void *s2, size_t n);
 void			*ft_memchr(const void *s, int c, size_t n);
 char			*ft_itoa(int nbr);
+int				ft_atoi_base(char *str, char *base);
 int				ft_isprint(int c);
 int				ft_isdigit(int c);
 int				ft_isascii(int c);

@@ -6,7 +6,7 @@
 /*   By: gaboidin <gaboidin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 14:56:20 by gaboidin          #+#    #+#             */
-/*   Updated: 2025/02/14 13:22:18 by gaboidin         ###   ########.fr       */
+/*   Updated: 2025/02/21 21:12:30 by gaboidin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,17 @@ void	free_map(int **map, int rows)
 		i++;
 	}
 	free(map);
+}
+
+void	free_color_map(int **colors, int rows)
+{
+	int	i;
+
+	i = 0;
+	while (i < rows)
+	{
+		free(colors[i]);
+		i++;
+	}
+	free(colors);
 }

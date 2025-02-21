@@ -6,7 +6,7 @@
 /*   By: gaboidin <gaboidin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 15:15:14 by gaboidin          #+#    #+#             */
-/*   Updated: 2025/02/13 18:03:47 by gaboidin         ###   ########.fr       */
+/*   Updated: 2025/02/21 21:30:32 by gaboidin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,16 +75,14 @@ void	print_legend(t_fdf *data)
 	mlx_string_put(data->mlx_ptr, data->win_ptr, 25, 10, 0x4C4178,
 		"Move: W A S D");
 	mlx_string_put(data->mlx_ptr, data->win_ptr, 25, 30, 0x4C4178,
-		"RGB Color: R G B C");
-	mlx_string_put(data->mlx_ptr, data->win_ptr, 25, 50, 0x4C4178,
 		"Zoom: + / -");
-	mlx_string_put(data->mlx_ptr, data->win_ptr, 25, 70, 0x4C4178,
+	mlx_string_put(data->mlx_ptr, data->win_ptr, 25, 50, 0x4C4178,
 		"Rotate: Up / Left / Right / Down / Q / E");
-	mlx_string_put(data->mlx_ptr, data->win_ptr, 25, 90, 0x4C4178,
+	mlx_string_put(data->mlx_ptr, data->win_ptr, 25, 70, 0x4C4178,
 		"Altitute: < / >");
-	mlx_string_put(data->mlx_ptr, data->win_ptr, 25, 110, 0x4C4178,
+	mlx_string_put(data->mlx_ptr, data->win_ptr, 25, 90, 0x4C4178,
 		"Change projection type: P");
-	mlx_string_put(data->mlx_ptr, data->win_ptr, 25, 130, 0x4C4178,
+	mlx_string_put(data->mlx_ptr, data->win_ptr, 25, 110, 0x4C4178,
 		"Exit: Esc");
 	return ;
 }

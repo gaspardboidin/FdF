@@ -6,7 +6,7 @@
 /*   By: gaboidin <gaboidin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 09:35:47 by gaboidin          #+#    #+#             */
-/*   Updated: 2025/02/14 13:22:22 by gaboidin         ###   ########.fr       */
+/*   Updated: 2025/02/21 21:12:36 by gaboidin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,34 +64,12 @@ int	allocate_map(t_fdf *data)
 	data->map = malloc(sizeof(int *) * data->max_y);
 	if (!data->map)
 		return (0);
-	return (1);
-}
-
-int	fill_map(char *filename, t_fdf *data)
-{
-	int		fd;
-	char	*line;
-	int		row;
-	int		row_checker;
-
-	fd = open(filename, O_RDONLY);
-	if (fd < 0)
-		return (0);
-	row = 0;
-	line = get_next_line(fd);
-	while (line)
+	data->colors = malloc(sizeof(int *) * data->max_y);
+	if (!data->colors)
 	{
-		row_checker = fill_map_row(line, data, row);
-		if (!row_checker)
-		{
-			free(line);
-			close(fd);
-			return (0);
-		}
-		free(line);
-		row++;
-		line = get_next_line(fd);
+		free(data->map);
+		data->map = NULL;
+		return (0);
 	}
-	close(fd);
 	return (1);
 }

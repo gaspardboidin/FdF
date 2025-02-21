@@ -6,7 +6,7 @@
 /*   By: gaboidin <gaboidin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 10:54:43 by gaboidin          #+#    #+#             */
-/*   Updated: 2025/01/30 16:35:57 by gaboidin         ###   ########.fr       */
+/*   Updated: 2025/02/17 15:45:57 by gaboidin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char	*read_file(int fd, char *res)
 			free(res);
 			return (NULL);
 		}
-		buffer[byte_read] = 0;
+		buffer[byte_read] = '\0';
 		res = ft_free(res, buffer);
 		if (ft_strchr(buffer, '\n'))
 			break ;
@@ -108,6 +108,12 @@ char	*get_next_line(int fd)
 	static char	*buffer;
 	char		*line;
 
+	if (fd == -1)
+	{
+		free(buffer);
+		buffer = NULL;
+		return (NULL);
+	}
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 	{
 		free(buffer);

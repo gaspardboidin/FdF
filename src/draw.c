@@ -6,7 +6,7 @@
 /*   By: gaboidin <gaboidin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:51:37 by gaboidin          #+#    #+#             */
-/*   Updated: 2025/02/13 18:14:10 by gaboidin         ###   ########.fr       */
+/*   Updated: 2025/02/21 21:34:55 by gaboidin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_point	get_point(int x, int y, int z, t_fdf *data)
 	p.x = (int)round(p.x);
 	p.y = (int)round(p.y);
 	p.z = new_z;
-	p.color = (data->color.r << 16) | (data->color.g << 8) | data->color.b;
+	p.color = data->colors[y][x];
 	return (p);
 }
 
@@ -87,12 +87,9 @@ void	draw_map(t_fdf *data)
 
 void	put_pixel(t_fdf *data, int x, int y, int color)
 {
-	char	*dst;
-
 	if (x >= 0 && x < data->width && y >= 0 && y < data->height)
 	{
-		dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel
-					/ 8));
-		*(unsigned int *)dst = color;
+		*(int *)(data->addr + (y * data->line_length
+					+ x * (data->bits_per_pixel / 8))) = color;
 	}
 }
